@@ -15,5 +15,7 @@
   "bugs": {
     "url": "https://github.com/cookiemonster105/IT-122/issues"
   },
-  "homepage": "https://github.com/cookiemonster105/IT-122#readme"
+  "homepage": "https://github.com/cookiemonster105/IT-122#readme",
+
+  "type": "module"
 }
