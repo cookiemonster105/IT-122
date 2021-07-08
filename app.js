@@ -24,11 +24,11 @@ switch(path){
 
     default:
         res.writeHead(404, {'Content-Type': 'text/plain'});
-        res.end ('not found');
+        res.end ('Nothing here not found');
         break;
 
 }
-
+  
   }
 ).listen(process.env.PORT || 3000);
 
