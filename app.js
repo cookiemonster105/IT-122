@@ -1,53 +1,67 @@
 import http from 'http';
 
-// import function from data.js
-import { getAll, getItem } from './data.js';
 
-import { parse } from "querystring";
+// Code to run express 
+'use strict'
+import express from 'express';
 
-http.createServer(
-   (req, res) => {
+const app = express();
+app.set('port', process.env.PORT || 3000);
+app.use(express.static('./public')); // set location for static files
+app.use(express.urlencoded()); //Parse URL-encoded bodies
 
+//End of Express code
+
+// Code to run handlebars
+import exphbs from "express-handlebars"
+//import { getAll, getItem } from './data.js';
+app.engine("handlebars", exphbs({defaultLayout: false}));
+app.set("view engine", "handlebars");
+
+//End of handlebars code
     
-var path = req.url.toLowerCase();
+// const getItem = (name) =>{
+//   return bookcases.find((name) =>{
+//     return item.name.toLowerCase() ===
+//     name.toLowerCase();
+//   }); 
+// };
 
-  let url = req.url.split("?");  // separate route from query string
-  let query = parse(url[1]); // convert query string to a JS object
-  console.log(query);
-  console.log(query.name);
+// send static file as response --Code assignemt  
 
-switch(url[0]){
-    case '/':
-
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.end (JSON.stringify( getAll()));
-
-        break;
-
-    case '/about':
-        res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.end ('About Page');
-        res.end (JSON.stringify(getAll, getItem));
-        break;
-
-    case '/detail':
-        res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.end (JSON.stringify(getItem(query.name)));
+ // send content of 'home' view
+app.get('/', (req,res) => {
+  res.render('home',{bookcases : getAll()});
+ });
 
 
+ // send plain text response
+ app.get('/about', (req,res) => {
+  res.type('text/plain');
+  res.send('About page is here');
+ });
 
-        break;
-    
+  // send plain text response
+  app.get('/detail', (req,res) => {
+    //res.type('text/plain');
+    //res.send('detail ifo page is here');
+    res.render('detail',{bookcases : getItem()});
+    //res.end (JSON.stringify(getItem(query.name)));
+    //res.render (JSON.stringify(getItem(query.name)));
+   });
+ 
+ // define 404 handler
+ app.use((req,res) => {
+  res.type('text/plain');
+  res.status(404);
+  res.send('404 - Not found');
+ });
 
-    default:
-        res.writeHead(404, {'Content-Type': 'text/plain'});
-        res.end ('Nothing here not found');
-        break;
+ app.listen(app.get('port'), () => {
+  console.log('Express started');
+ });
+//End code assignemt 3
 
-}
-  
-  }
-).listen(process.env.PORT || 3000);
 
 
 

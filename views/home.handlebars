@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+<title>Bookcase Home</title> 
+</head>
+
+<link href= "../style.css" rel="stylesheet">
+<body>
+
+    <h2>Bookcases:</h2>
+{{#each bookcases}}
+<li>
+    Name:<a href="/detail?title={{name}}">{{name}}</a>
+ </li> 
+{{/each}}
+<hr>
+</body>
+</html>

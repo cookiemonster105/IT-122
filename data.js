@@ -8,7 +8,7 @@ let bookcase = [
 {name : "Havsta", type : "Shelving unit with base", height : 24, width : 83, price : 169, color : "gray"}
 ];
 // // Returns # of bookcases 
-// console.log(bookcase.length)
+ console.log("bookcase length " + bookcase.length)
 
 // Returns all bookcases 
 
