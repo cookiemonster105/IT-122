@@ -14,7 +14,7 @@ app.use(express.urlencoded()); //Parse URL-encoded bodies
 
 // Code to run handlebars
 import exphbs from "express-handlebars"
-//import { getAll, getItem } from './data.js';
+import { getAll, getItem } from './data.js';
 app.engine("handlebars", exphbs({defaultLayout: false}));
 app.set("view engine", "handlebars");
 

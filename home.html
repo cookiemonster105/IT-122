@@ -7,6 +7,12 @@
 
 </head>
 <body>
-<h1>You are Home</h1>
+<h1>The home of Bookcases</h1>
+{{! if..else block }}
+{{#if name}}
+  <h2>Bookcases: {{name}}</h2>
+{{else}}
+  <h2>Please enter a bookcase name</h2>
+{{/if}}
 </body>
 </html>

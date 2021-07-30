@@ -29,9 +29,10 @@ const getAll = () => {
 
 // Returns single bookcase
 const getItem = (bookcaseName) => {
-    return bookcase.find((name) =>{
-        return name.name.toLowerCase() == bookcaseName.toLowerCase();
-    });
+    return bookcase.find(name => name.name == bookcaseName) 
+    // return bookcase.find((name) =>{
+    //    // return name.name.toLowerCase()//== bookcaseName.toLowerCase();
+    // });
 }
 
 
