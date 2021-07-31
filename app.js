@@ -44,8 +44,9 @@ app.get('/', (req,res) => {
   // send plain text response
   app.get('/detail', (req,res) => {
     //res.type('text/plain');
+    console.log(req.query.name); // display parsed querystring object
     //res.send('detail ifo page is here');
-    res.render('detail',{bookcases : getItem()});
+    res.render('detail',{bookcase : getItem(req.query.name)});
     //res.end (JSON.stringify(getItem(query.name)));
     //res.render (JSON.stringify(getItem(query.name)));
    });
