@@ -1,5 +1,5 @@
 import http from 'http';
-
+import { Bookcase } from "./models.js";
 
 // Code to run express 
 'use strict'
@@ -30,9 +30,20 @@ app.set("view engine", "handlebars");
 // send static file as response --Code assignemt  
 
  // send content of 'home' view
-app.get('/', (req,res) => {
-  res.render('home',{bookcases : getAll()});
- });
+// app.get('/', (req,res) => {
+//   res.render('home',{bookcases : getAll()});
+//  });
+
+ // send content of 'home' view
+ app.get('/', (req, res, next) => {
+  Bookcase.find({}).lean()
+    .then((bookcases) => {
+      // respond to browser only after db query completes
+      res.render('home', { bookcases });
+    })
+    .catch(err => next(err))
+  });
+// return all records
 
 
  // send plain text response
@@ -42,14 +53,19 @@ app.get('/', (req,res) => {
  });
 
   // send plain text response
-  app.get('/detail', (req,res) => {
-    //res.type('text/plain');
-    console.log(req.query.name); // display parsed querystring object
-    //res.send('detail ifo page is here');
-    res.render('detail',{bookcase : getItem(req.query.name)});
-    //res.end (JSON.stringify(getItem(query.name)));
-    //res.render (JSON.stringify(getItem(query.name)));
-   });
+  // app.get('/detail', (req,res) => {
+  //   console.log(req.query.name); // display parsed querystring object
+  //   res.render('detail',{bookcase : getItem(req.query.name)});    
+  //  });
+
+   app.get('/detail', (req,res,next) => {
+    // db query can use request parameters
+    Bookcase.findOne({ name:req.query.name }).lean() 
+        .then((bookcases) => {
+            res.render('detail', {result: bookcases} );
+        })
+        .catch(err => next(err));
+});
  
  // define 404 handler
  app.use((req,res) => {
