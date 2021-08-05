@@ -1,22 +1,23 @@
-{{!-- <!doctype html>
-<html>
+
 <head>
 <title>Bookcase Detail</title> 
 </head>
-
 <link href="../style.css" rel="stylesheet">
-<body>
-     <a href="https://www.w3schools.com">  --}}
-     <a href="/">Home</a>
+
+<body id="detail">
+       
+<a href="/">Home</a>
 <h1>Bookcase Details</h1>
-<h2>{{bookcases.name}} </h2>
-<h2>{{bookcases.price}}</h2>
+<h2>{{name}} </h2>
+<h2>$ {{price}}</h2>
 <ul>
-    <li>Height: {{bookcases.height}}</li>
-    <li>Width: {{bookcases.width}}</li>
-    <li>Color: {{bookcases.color}}</li>
+    <li>Height: {{height}}</li>
+    <li>Width: {{width}}</li>
+    <li>Type: {{type}}</li>
+    <li>Color: {{color}}</li>
 </ul>
-color:<a href="/detail?name={{color}}">{{color}}</a>
+<p{{notes}}></p>
+
 {{!-- <hr>
 </body>
 </html> --}}
