@@ -147,7 +147,6 @@ app.post('/api/bookcases/add', (req,res,next) => {
 });
 
 
-//{name : "Kallax", type : "shelf unit", height : 30, width : 57, price : 69.99, color : "white"},
  
 //   res.send('Are you looking to add a bookcase?') 
   
