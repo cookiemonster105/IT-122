@@ -1,4 +1,44 @@
+
 <!doctype html>
+<html>
+<head>
+<title>Bookcase Home</title> 
+</head>
+
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+<!-- Don't use this in production: -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+<link href= "../style.css" rel="stylesheet">
+<body>
+
+    <h2>Bookcases:</h2>
+ 
+<div id="root"></div>
+<script type="text/babel">
+
+    const items = {{{ items }}}
+    console.log(items)
+
+    // define other components
+
+    const App = () => {
+        <li>
+        return <div><h2>Name:<a href="/detail?id={{_id}}">{{name}}</a></h2></div>;
+      </li>
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+</body>
+</html>
+
+{{!-- ---------------------------------------------------------------------------- --}}
+
+{{!-- <!doctype html>
 <html>
 <head>
 <title>Bookcase Home</title> 
@@ -22,4 +62,4 @@
 {{/each}}
 <hr>
 </body>
-</html>
+</html> --}}
