@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 //Security
-import {connectionString } from "./credentials.js";
+import {connectionString } from "../credentials.js";
 
 
 mongoose.connect(connectionString, {

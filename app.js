@@ -1,11 +1,11 @@
 import http from 'http';
-import { Bookcase } from "./models.js";
+import { Bookcase } from "./models/models.js";
 import cors from 'cors';
-
+//const mongoose = require('mongoose')
 
 // Code to run express 
 'use strict'
-import express from 'express';
+import express, { Router } from 'express';
 
 const app = express();
 app.set('port', process.env.PORT || 3000);
@@ -50,32 +50,7 @@ app.set("view engine", "handlebars");
 // return all records
 
 
-//API Routes
 
-app.get('/api/bookcases', (req,res) => {
-  Bookcase.find({}).lean()
-    .then((bookcases) => {
-      if (bookcases.length > 0) {
-    res.json(bookcases);
-    console.log(bookcases)
-  } else {
-    return res.status(500).send('--Database Error occurred--app.js 62');
-  }
-  })
-});
-
-app.get('/api/bookcases/:name', (req, res, next) => {
- 
-  const name = req.params.name;
-  console.log(req.params.name)
-  Bookcase.findOne({name:req.params.name }).lean()
-    .then(name => {
-      res.json(name)
-     
-   })
-    .catch(err => next(err));
-});
-  
       // if(quote) {
       //     res.render('detail', quote);
       //     //res.json(quote);
@@ -113,7 +88,120 @@ app.get('/detail', (req, res) => {
     });
 });
 
+//API Routes
 
+app.get('/api/bookcases', (req,res) => {
+  Bookcase.find({}).lean()
+    .then((bookcases) => {
+      if (bookcases.length > 0) {
+    res.json(bookcases);
+    console.log(bookcases)
+  } else {
+    return res.status(500).send('--Database Error occurred--app.js 62');
+  }
+  })
+ });
+// // Get by query name
+// app.get('/api/bookcases?name', (req, res, next) => {
+//   res.send('Are you looking for a bookcase?? ${req.query.name}') 
+//   const name = req.query.name;
+//   console.log(req.query.name)
+//   Bookcase.findOne({name:req.querys.name }).lean()
+//     .then(name => {
+//       res.json(name)
+//          })
+//      .catch(err => next(err));
+//  });
+
+//Get by name
+app.get('/api/bookcases/:name', (req, res, next) => {
+  //res.send('Are you looking for a bookcase? ${req.params.name}') 
+  console.log(req.params.name)
+  Bookcase.findOne({name:req.params.name }).lean()
+    .then(name => {
+      res.json(name)
+     
+   })
+    .catch(err => next(err));
+});
+
+//Delete by name
+app.get('/api/bookcases/delete/:name', (req, res, next) => {
+ res.send('Are you deleting for a bookcase?') 
+  console.log(req.params.name)
+  Bookcase.deleteOne({name:req.params.name }).lean()
+    .then(name => {
+      res.json(name)
+     
+   })
+    .catch(err => next(err));
+});
+
+app.post('/api/bookcases/add', (req,res,next) => {
+  Bookcase.updateOne({'name':req.body.name}, req.body, {upsert:true}, (err, result) => {
+      if (err) return next(err);
+      console.log(result);
+      // .catch(err => next(err));
+      res.json({"message": "Added ne Bookcase"})
+  });
+});
+
+
+//{name : "Kallax", type : "shelf unit", height : 30, width : 57, price : 69.99, color : "white"},
+ 
+//   res.send('Are you looking to add a bookcase?') 
+  
+//  const addBookcase ={
+// id: new mongoose.Types.ObjectId()
+//   if(!req.body) {
+//     return res.status(400).send('request body is missing');
+//   }
+  
+//  const newbookcase = new record{
+//    _id:  
+//     name: req.body.name
+//     type: String,
+//     height: Number,
+//     width: Number,
+//     price: Number,
+//     color: String
+  
+//   }
+//   const model = new BookcaseModel(req.body)
+//   model.save()
+//     .then(doc => {
+//       if(!doc || doc.length === 0) {
+//         return res.status(500).send(doc)
+//       }
+//       res.status(201).send(doc)
+//     })
+//     .catch(err => {
+//       res.status(500).jason(err)
+//     })
+
+
+// //Add a new bookcase via post
+// app.post('/api/bookcases/add/:name', (req, res, next) => {
+//   res.send('Are you looking to add a bookcase?') 
+  
+//   const addBookcase ={
+// id: new mongoose.Types.ObjectId()
+//   if(!req.body) {
+//     return res.status(400).send('request body is missing')
+  
+//   let model = new {
+//   name: { type: String, required: true },
+//   type: String,
+//   height: Number,
+//   width: Number,
+//   price: Number,
+//   color: String
+// }
+// }
+   
+// });
+
+//   .catch(err => next(err));
 
  // define 404 handler
  app.use((req,res) => {
