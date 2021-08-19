@@ -16,22 +16,47 @@
 <body>
 
     <h2>Bookcases:</h2>
- 
+
 <div id="root"></div>
 <script type="text/babel">
 
-    const items = {{{ items }}}
-    console.log(items)
+   // const items =  {{{ items }}}
+   // console.log(items)
 
-    // define other components
+    //const cases =bookcases.map((name) => <li key = {name}>{name} </li>);
+    // console.log(items)
 
-    const App = () => {
-        <li>
-        return <div><h2>Name:<a href="/detail?id={{_id}}">{{name}}</a></h2></div>;
-      </li>
+   const Display = (props) => {
+      const bullets =  props.items.map((item)=> {
+        return <li key={item._id}>{item.name}</li>
+      });
+      return <ul>{bullets}</ul>
     }
 
-    ReactDOM.render(<App />, document.getElementById('root'));
+
+   class App extends React.Componet {
+     // return <div><h2>Show components here <li>{{items}}</li> </h2></div>;
+     constructor(props) {
+         super(props);
+         this.state={
+             items:{{{bookcases}}}
+         }
+     }
+     getData(){
+         fetch(`/api/bookcases`)
+         .then(result => this.setState(result))
+         .catch(err => console.log("Not Working", err))
+     }
+     render(){
+         return(<div>
+             <Display getData={this.getData}>
+            
+             </div>);
+     }
+    }
+
+
+    ReactDOM.render(App , document.getElementById('root'));
 </script>
 </body>
 </html>
@@ -43,6 +68,16 @@
 <head>
 <title>Bookcase Home</title> 
 </head>
+
+
+ const dispaly = ( props) => {
+        return <div>
+            <h1>bookcases</h1>
+            <form> 
+               Name: <input type="text" name= "bookcases" value ={props.}></input>
+            </form>
+             </div>
+    }
 
 <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>

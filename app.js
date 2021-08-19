@@ -42,8 +42,9 @@ app.set("view engine", "handlebars");
   Bookcase.find({}).lean()
     .then((bookcases) => {
       // respond to browser only after db query completes
-      console.log(bookcases)
-      res.render('home', { bookcases });
+      //console.log(bookcases)
+      console.log(JSON.stringify(bookcases))
+      res.render('home', {items: JSON.stringify(bookcases)});
     })
     .catch(err => next(err))
   });
