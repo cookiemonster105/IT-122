@@ -1,0 +1,58 @@
+<html>
+<head>
+    <title>React App Demo</title>
+
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+
+<div id="root"></div>
+<script type="text/babel">
+
+    // define other components
+
+    // functional component that takes the props from state
+    const ItemList = (props) => {
+          const bullets =  props.items.map((item)=> {
+            return <li onClick={props.handleClick} key={item._id}>{item.name}</li>
+          });
+          return <ul>{bullets}</ul>
+    }
+
+
+
+
+
+    class App extends React.Component{
+      constructor(props){
+          super(props);
+          // Set initial state using data from server application
+          this.state = {
+            items: {{{ bookcases }}},
+          };
+          // bind application state to click handler
+        }
+
+      // your functions need to be defined here, update, delete, clear
+
+        render() {
+          // render app UI elements
+          return (
+            <div>
+            <h2>List of Bookcases</h2>
+              <ItemList items={this.state.items} />
+            
+            </div>
+          );
+        }
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+</body>
+</html>

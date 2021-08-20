@@ -18,7 +18,7 @@ app.use(express.json()); //Used to parse JSON bodies
 // Code to run handlebars
 import exphbs from "express-handlebars"
 import { getAll, getItem } from './data.js';
-app.engine("handlebars", exphbs({defaultLayout: false}));
+app.engine("handlebars", exphbs({defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
 //End of handlebars code
@@ -44,7 +44,11 @@ app.set("view engine", "handlebars");
       // respond to browser only after db query completes
       //console.log(bookcases)
       console.log(JSON.stringify(bookcases))
-      res.render('home', {items: JSON.stringify(bookcases)});
+
+      // THERE WAS A MISTAKE HERE YOU WERE DOING {item: JSON.stringify(bookcases)}
+      // WHEN YOUR RETURNED OBJECT IS CALL "bookcases" line 43 inside then function.
+      
+      res.render('home_react', {bookcases: JSON.stringify(bookcases)});
     })
     .catch(err => next(err))
   });
@@ -92,16 +96,24 @@ app.get('/detail', (req, res) => {
 //API Routes
 
 app.get('/api/bookcases', (req,res) => {
+  // Bookcase.find({})
+  // .lean()
+  //   .then((bookcases) => {
+  //     if (bookcases.length > 0) {
+  //   res.json(bookcases);
+  //   console.log(bookcases)
+  // } else {
+  //   return res.status(500).send('--Database Error occurred--app.js 62');
+  // }
+  // })
   Bookcase.find({}).lean()
-    .then((bookcases) => {
-      if (bookcases.length > 0) {
-    res.json(bookcases);
-    console.log(bookcases)
-  } else {
-    return res.status(500).send('--Database Error occurred--app.js 62');
-  }
-  })
+        .then((bookcases) => {
+            res.json(bookcases)
+        })
+        .catch(err => next(err));
  });
+
+
 // // Get by query name
 // app.get('/api/bookcases?name', (req, res, next) => {
 //   res.send('Are you looking for a bookcase?? ${req.query.name}') 
